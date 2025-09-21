@@ -36,6 +36,8 @@ public:
     }
 
     void SetTextTint(Color text_tint) { m_text_tint = text_tint;}
+    void SetText(std::string text) { m_text = text; };
+    std::string GetText() { return m_text; }
 
 protected:
     std::string m_text{};

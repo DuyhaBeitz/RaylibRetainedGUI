@@ -1,20 +1,29 @@
 #include <RaylibRetainedGUI/RaylibRetainedGUI.hpp>
 
 int main() {
-    InitWindow(0, 0, "Retained GUI minimal example");
+    InitWindow(1000, 1000, "Retained GUI minimal example");
 
     auto screen = std::make_shared<UIScreen>();
     auto bar = std::make_shared<UIBar>(CenteredRect(0.5, 0.5));
-    auto text = std::make_shared<UIText>("Text example", SizeRect(1, 0.25));
-    auto button = std::make_shared<UIFuncButton>("Press me!", SizeRect(1, 0.25));
+    
+    // the position will be handled by the bar
+    Rectangle rect = SizeRect(1, 0.33);
+
+    auto text = std::make_shared<UIText>("Default text", rect);
+
+    std::string str = "";
+    auto string_button = std::make_shared<UIStringButton>(&str, rect);
+    
+    auto apply_button = std::make_shared<UIFuncButton>("Apply", rect);
 
     bar->AddChild(text);
-    bar->AddChild(button);
+    bar->AddChild(string_button);
+    bar->AddChild(apply_button);
     
     screen->AddChild(bar);
 
-    button->BindOnReleased([bar](){
-            bar->Close();
+    apply_button->BindOnReleased([text, &str](){
+            text->SetText(*&str);
         }
     );
 
