@@ -1,2 +1,2 @@
-cmake -S . -B build -DRAYLIBRETAINEDGUI_BUILD_EXAMPLES=ON
+cmake -S . -B build
 cmake --build build
