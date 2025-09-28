@@ -15,7 +15,7 @@ target_include_directories(${PROJECT_NAME}
         $<INSTALL_INTERFACE:include>
 )
 
-find_package(raylib 5.0 REQUIRED)
+find_package(raylib REQUIRED)
 target_link_libraries(${PROJECT_NAME} PRIVATE
     raylib
 )
