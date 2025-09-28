@@ -64,10 +64,10 @@ public:
         UpdateButtonState();
     };
 
-    void BindOnPressed(void (*func)()) {on_pressed = func;}
-    void BindOnHovered(void (*func)()) {on_hovered = func;}
-    void BindOnUnhovered(void (*func)()) {on_unhovered = func;}
-    void BindOnReleased(void (*func)()) {on_released = func;}
+    // void BindOnPressed(void (*func)()) {on_pressed = func;}
+    // void BindOnHovered(void (*func)()) {on_hovered = func;}
+    // void BindOnUnhovered(void (*func)()) {on_unhovered = func;}
+    // void BindOnReleased(void (*func)()) {on_released = func;}
 
     void BindOnPressed(std::function<void()> func) {on_pressed = func;}
     void BindOnHovered(std::function<void()> func) {on_hovered = func;}
