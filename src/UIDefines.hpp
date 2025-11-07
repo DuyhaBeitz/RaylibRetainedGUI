@@ -6,7 +6,7 @@
 
 #define UI_LINE_THICKNESS 3.0
 
-#define UI_BACKGROUND ColorFromHex("#181818")
+#define UI_BACKGROUND ColorFromHex("#ffffff00")
 
 #define UI_TEXT_COLOR ColorFromHex("#F7F7F7")
 #define UI_TEXT_SPACING 5.5

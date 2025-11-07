@@ -1,6 +1,6 @@
 #pragma once
 #include "UIStringButton.hpp"
-#include <stdexcept>
+#include <charconv>
 
 class UIFloatButton : public UIStringButton {
     float* m_float_ptr;
@@ -15,15 +15,15 @@ public:
     }
 
     void UpdateFloat() {
-        try {
-            *m_float_ptr = std::stof(m_text);
-            //std::cout << "Converted integer: " << *m_int_ptr << std::endl;
-        } catch (const std::invalid_argument& e) {
+        const char* str = m_text.c_str();
+        float value = 0.0f;
+        auto result = std::from_chars(str, str + m_text.size(), value);
+        
+        if (result.ec == std::errc::invalid_argument || 
+            result.ec == std::errc::result_out_of_range) {
             *m_float_ptr = 0;
-            //std::cerr << "Invalid argument: " << e.what() << std::endl;
-        } catch (const std::out_of_range& e) {
-            *m_float_ptr = 0;
-            //std::cerr << "Out of range: " << e.what() << std::endl;
+        } else {
+            *m_float_ptr = value;
         }
     }
 

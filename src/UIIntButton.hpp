@@ -1,7 +1,7 @@
 #pragma once
 
 #include "UIStringButton.hpp"
-#include <stdexcept>
+#include <charconv>
 
 class UIIntButton : public UIStringButton {
     int* m_int_ptr;
@@ -15,15 +15,15 @@ public:
     }
 
     void UpdateInt() {
-        try {
-            *m_int_ptr = std::stoi(m_text);
-            //std::cout << "Converted integer: " << *m_int_ptr << std::endl;
-        } catch (const std::invalid_argument& e) {
+        const char* str = m_text.c_str();
+        int value = 0.0f;
+        auto result = std::from_chars(str, str + m_text.size(), value);
+        
+        if (result.ec == std::errc::invalid_argument || 
+            result.ec == std::errc::result_out_of_range) {
             *m_int_ptr = 0;
-            //std::cerr << "Invalid argument: " << e.what() << std::endl;
-        } catch (const std::out_of_range& e) {
-            *m_int_ptr = 0;
-            //std::cerr << "Out of range: " << e.what() << std::endl;
+        } else {
+            *m_int_ptr = value;
         }
     }
 
