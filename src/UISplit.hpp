@@ -35,7 +35,7 @@ public:
     };
 
     virtual void Draw() {
-        DrawBase();
+        GetStyle()->DrawBase(*this);
         DrawChildren();
     }
 };

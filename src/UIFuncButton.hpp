@@ -47,13 +47,13 @@ public:
 
         switch (state) {
         case BTN_PRESSED:
-            m_text_tint = UI_BUTTON_TEXT_PRESSED_COLOR;
+            m_text_tint = GetStyle()->m_button_text_pressed_color;
             break;
         case BTN_HOVERED:
-            m_text_tint = UI_BUTTON_TEXT_HOVERED_COLOR;
+            m_text_tint = GetStyle()->m_button_text_hovered_color;
             break;
         case BTN_DEFAULT:
-            m_text_tint = UI_BUTTON_TEXT_DEFAULT_COLOR;
+            m_text_tint = GetStyle()->m_button_text_default_color;
             break;
         }
     }

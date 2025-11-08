@@ -11,7 +11,6 @@ public:
     };
 
     virtual void Draw() override {
-        DrawBase();
         DrawChildren();
     };
 };

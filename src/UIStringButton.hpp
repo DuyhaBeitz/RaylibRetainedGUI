@@ -40,6 +40,12 @@ public:
         UpdateString();
     }
 
+    void Clear() {
+        m_buffer = "";
+        *m_string_ptr = m_buffer;
+        m_buffer_cursor_pos = 0;
+    }
+
     void AddAllowedCharacter(char c) {
         m_additional_allowed_characters.insert(c);
     }
@@ -47,7 +53,7 @@ public:
     void UpdateString() {
         // Get char pressed (unicode character) on the queue
         int key = GetCharPressed();
-
+        
         if (IsKeyPressed(KEY_LEFT)) {
             CursorMove(-1);
         }
@@ -94,12 +100,12 @@ public:
     }
 
     virtual void Draw() {
-        DrawBase();
+        GetStyle()->DrawBase(*this);
         std::string text_to_draw = m_text;
         if (m_entering) text_to_draw.insert(text_to_draw.begin()+m_buffer_cursor_pos, '|');
         DrawText(text_to_draw);
-        DrawChildren();
-        DrawBorders();
+        GetStyle()->DrawBorders(*this);
+        DrawChildren();        
     }
 
     virtual void Update(std::shared_ptr<UIElement> parent_element) override {

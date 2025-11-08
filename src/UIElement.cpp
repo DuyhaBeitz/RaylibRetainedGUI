@@ -26,17 +26,6 @@ void UIElement::UpdateChildren() {
     }
 }
 
-void UIElement::DrawBase() {
-    DrawRectanglePro(GetRect(), Vector2{0, 0}, 0.f, UI_BACKGROUND);
-}
-
-void UIElement::DrawBorders() {
-    DrawRectangleLinesEx(GetRect(), UI_LINE_THICKNESS, UI_LINE_COLOR);
-    if (MouseOn()) {
-        DrawRectangleLinesEx(GetInnerRect(UI_LINE_THICKNESS), UI_LINE_THICKNESS, UI_LINE_COLOR);
-    }
-}
-
 void UIElement::DrawChildren() {
     for (int i = 0; i < m_children.size(); i++) {
         m_children[i]->Draw();

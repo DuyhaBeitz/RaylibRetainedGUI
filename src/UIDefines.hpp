@@ -4,22 +4,6 @@
 #include <raymath.h>
 #include <string>
 
-#define UI_LINE_THICKNESS 3.0
-
-#define UI_BACKGROUND ColorFromHex("#ffffff00")
-
-#define UI_TEXT_COLOR ColorFromHex("#F7F7F7")
-#define UI_TEXT_SPACING 5.5
-
-#define UI_LINE_COLOR ColorFromHex("#673AB7")
-#define UI_FOCUSED_LINE_COLOR ColorFromHex("#673AB7")
-
-#define UI_BUTTON_TEXT_DEFAULT_COLOR UI_TEXT_COLOR
-#define UI_BUTTON_TEXT_HOVERED_COLOR ColorFromHex("#e96818ff")
-#define UI_BUTTON_TEXT_PRESSED_COLOR ColorFromHex("#777777ff")
-#define UI_LABEL_TEXT_COLOR ColorFromHex("#e96818ff")
-#define UI_COMMON_BUTTON_COUNT 6
-
 #define UI_FULL_RECT Rectangle{0, 0, 1, 1}
 #define UI_FULL_SIZE Vector2{1, 1}
 

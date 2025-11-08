@@ -6,6 +6,7 @@
 #include <set>
 #include <vector>
 #include <memory>
+#include "UIStyle.hpp"
 
 class UIElement : public std::enable_shared_from_this<UIElement> {
 protected:
@@ -20,7 +21,15 @@ protected:
     std::vector<std::shared_ptr<UIElement>> m_children{};
     bool m_closed = false;
     
+    std::shared_ptr<UIStyle> GetStyle() const {
+        if (!default_style) default_style = std::make_shared<UIStyle>(GetFontDefault());
+        return default_style;
+    }
+    static inline std::shared_ptr<UIStyle> default_style = nullptr;
+
 public:
+
+    static void SetDefaultStyle(std::shared_ptr<UIStyle> style) { default_style = style; }
 
     UIElement(Rectangle rect = UI_FULL_RECT)
     : m_rel_pos(Vector2{rect.x, rect.y}),  m_rel_size(Vector2{rect.width, rect.height})
@@ -35,14 +44,12 @@ public:
         UpdateChildren();
     }
 
-    void DrawBase();
-    void DrawBorders();
     void DrawChildren();
 
     virtual void Draw() {
-        DrawBase();
+        GetStyle()->DrawBase(*this);
+        GetStyle()->DrawBorders(*this);
         DrawChildren();
-        DrawBorders();
     }
 
     // pos
@@ -56,7 +63,7 @@ public:
     void SetRelSize(Vector2 rel_size) { m_rel_size = rel_size; }
 
     Rectangle GetRect() { return Rectangle{m_abs_pos.x, m_abs_pos.y, m_abs_size.x, m_abs_size.y}; }
-    Rectangle GetInnerRect(float padding = UI_LINE_THICKNESS) { return Rectangle{m_abs_pos.x+padding, m_abs_pos.y+padding, m_abs_size.x-padding*2, m_abs_size.y-padding*2}; }
+    Rectangle GetInnerRect(float padding) { return Rectangle{m_abs_pos.x+padding, m_abs_pos.y+padding, m_abs_size.x-padding*2, m_abs_size.y-padding*2}; }
 
     std::vector<std::shared_ptr<UIElement>>& GetChildren() {return m_children;}
 
