@@ -7,8 +7,8 @@ class UIFloatButton : public UIStringButton {
 public:
     UIFloatButton(float* float_ptr, Rectangle rect = UI_FULL_RECT)
      : UIStringButton(nullptr, rect, CHAR_DIGIT_MIN, CHAR_DIGIT_MAX), m_float_ptr(float_ptr) {
-        AddAllowedCharacter('.');
-        AddAllowedCharacter('-');
+        SetOnlyAllowedCodepoints(true);
+        AddAllowedCharacters("0123456789-.");
         
         UpdateString();
         UpdateFloat();

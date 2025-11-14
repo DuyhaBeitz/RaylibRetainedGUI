@@ -37,7 +37,9 @@ install(TARGETS ${PROJECT_NAME}
 # Install public headers (everything in src/ that looks like a header)
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src/
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}
-    FILES_MATCHING PATTERN "*.hpp"
+    FILES_MATCHING
+    PATTERN "*.h"
+    PATTERN "*.hpp"
 )
 
 # Generate a config file for find_package()

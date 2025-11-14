@@ -8,7 +8,8 @@ class UIIntButton : public UIStringButton {
 public:
     UIIntButton(int* int_ptr, Rectangle rect = UI_FULL_RECT)
      : UIStringButton(nullptr, rect, CHAR_DIGIT_MIN, CHAR_DIGIT_MAX), m_int_ptr(int_ptr) {
-        AddAllowedCharacter('-');
+        SetOnlyAllowedCodepoints(true);
+        AddAllowedCharacters("0123456789-");
        
         UpdateString();
         UpdateInt();

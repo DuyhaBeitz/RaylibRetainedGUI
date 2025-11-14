@@ -21,10 +21,6 @@ protected:
     std::vector<std::shared_ptr<UIElement>> m_children{};
     bool m_closed = false;
     
-    std::shared_ptr<UIStyle> GetStyle() const {
-        if (!default_style) default_style = std::make_shared<UIStyle>(GetFontDefault());
-        return default_style;
-    }
     static inline std::shared_ptr<UIStyle> default_style = nullptr;
 
 public:
@@ -74,4 +70,9 @@ public:
     virtual void AddChild(std::shared_ptr<UIElement> child) { m_children.push_back(child); }
 
     virtual bool MouseOn() { return CheckCollisionPointRec(GetMousePosition(), GetRect()); }
+    
+    std::shared_ptr<UIStyle> GetStyle() const {
+        if (!default_style) default_style = std::make_shared<UIStyle>(GetFontDefault());
+        return default_style;
+    }
 };
