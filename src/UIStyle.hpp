@@ -20,6 +20,8 @@ struct UIStyle {
     float m_line_thickness;
     float m_text_spacing;
 
+    float m_max_text_size;
+
     UIStyle(Font font) :
     m_font(font),
     m_background_color(ColorFromHex("#0000007d")),
@@ -29,7 +31,8 @@ struct UIStyle {
     m_button_text_hovered_color(ColorFromHex("#e96818ff")),
     m_button_text_pressed_color(ColorFromHex("#777777ff")),
     m_line_thickness(3.f),
-    m_text_spacing(5.f)
+    m_text_spacing(5.f),
+    m_max_text_size(128)
     {}
 
     virtual void DrawBase(UIElement& e);

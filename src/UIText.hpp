@@ -19,7 +19,8 @@ public:
         float adjustedFontSize = m_font_size * finalScale * 0.7; // 0.8 for some padding
         //float adjustedFontSize = GetScreenWidth() / 50;
         // Recalculate text size with adjusted font size (more accurate for positioning)
-        textSize = MeasureTextEx(m_font, text.c_str(), adjustedFontSize, GetStyle()->m_text_spacing);
+        adjustedFontSize = fmin(adjustedFontSize, GetStyle()->m_max_text_size);
+        textSize = MeasureTextEx(m_font, text.c_str(), adjustedFontSize, GetStyle()->m_text_spacing);        
 
         Vector2 textPosition;
         textPosition.x = GetRect().x + (GetRect().width - textSize.x) / 2;

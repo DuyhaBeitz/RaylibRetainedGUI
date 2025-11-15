@@ -19,7 +19,7 @@ inline Rectangle CenteredRect(float width, float height) {
     return Rectangle{(1-width)/2, (1-height)/2, width, height};
 }
 
-inline Rectangle CenteredUIRect(float width, float height) {
+inline Rectangle CenteredRectAlignUp(float width, float height) {
     return Rectangle{(1-width)/2, 0, width, height};
 }
 
