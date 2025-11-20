@@ -15,7 +15,7 @@ target_include_directories(${PROJECT_NAME}
         $<INSTALL_INTERFACE:include>
 )
 
-find_package(raylib REQUIRED)
+# raylib is provided outside
 target_link_libraries(${PROJECT_NAME} PRIVATE
     raylib
 )

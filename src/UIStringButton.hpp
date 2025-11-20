@@ -101,6 +101,14 @@ public:
             while (m_buffer_cursor_pos < m_buffer.size() && IsKeyDown(KEY_LEFT_CONTROL));
             
         }
+
+        if (IsKeyPressed(KEY_V) && IsKeyDown(KEY_LEFT_CONTROL))
+        {
+            const char* clipboard = GetClipboardText( );
+            std::string temp(clipboard);
+            m_buffer.insert(m_buffer_cursor_pos, temp);
+        }
+
         m_text = m_buffer;
         if (m_string_ptr) *m_string_ptr = m_text;
 
