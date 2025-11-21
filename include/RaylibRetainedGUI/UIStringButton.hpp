@@ -2,7 +2,7 @@
 
 #include "UIFuncButton.hpp"
 
-#include "utf8.h"
+#include "utf8/utf8.h"
 
 //#define MAX_INPUT_CHARS     128
 

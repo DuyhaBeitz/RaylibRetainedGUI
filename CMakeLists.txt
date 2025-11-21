@@ -6,16 +6,28 @@ set(CMAKE_CXX_STANDARD 20)
 
 option(RAYLIBRETAINEDGUI_BUILD_EXAMPLES "Build examples" OFF)
 
-file(GLOB_RECURSE SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
-add_library(${PROJECT_NAME} ${SOURCES})
+add_library(${PROJECT_NAME} STATIC 
+    src/UIElement.cpp
+    src/UIStyle.cpp
+)
 
 target_include_directories(${PROJECT_NAME}
     PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:include>
 )
 
-# raylib is provided outside
+find_package(raylib QUIET)
+if (NOT raylib_FOUND)
+    include(FetchContent)
+    FetchContent_Declare(
+        raylib
+        URL https://github.com/raysan5/raylib/archive/refs/tags/5.0.zip 
+        GIT_TAG 5.5
+    )
+    FetchContent_MakeAvailable(raylib)
+endif()
+
 target_link_libraries(${PROJECT_NAME} PRIVATE
     raylib
 )
@@ -25,26 +37,21 @@ if(RAYLIBRETAINEDGUI_BUILD_EXAMPLES)
 endif()
 
 ################################### Installation
-# include(GNUInstallDirs)
+include(GNUInstallDirs)
 
-# install(TARGETS ${PROJECT_NAME}
-#     EXPORT ${PROJECT_NAME}Targets
-#     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-#     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-#     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-# )
+install(TARGETS ${PROJECT_NAME}
+    EXPORT ${PROJECT_NAME}Targets
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
 
-# # Install public headers (everything in src/ that looks like a header)
-# install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src/
-#     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}
-#     FILES_MATCHING
-#     PATTERN "*.h"
-#     PATTERN "*.hpp"
-# )
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
 
-# # Generate a config file for find_package()
-# install(EXPORT ${PROJECT_NAME}Targets
-#     FILE ${PROJECT_NAME}Config.cmake
-#     NAMESPACE ${PROJECT_NAME}::
-#     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
-# )
+install(EXPORT ${PROJECT_NAME}Targets
+    FILE ${PROJECT_NAME}Config.cmake
+    NAMESPACE ${PROJECT_NAME}::
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
+)

@@ -1,5 +1,5 @@
-#include "UIStyle.hpp"
-#include "UIElement.hpp"
+#include "RaylibRetainedGUI/UIStyle.hpp"
+#include "RaylibRetainedGUI/UIElement.hpp"
 
 void UIStyle::DrawBase(UIElement &e) {
     DrawRectanglePro(e.GetRect(), Vector2{0, 0}, 0.f, m_background_color);
