@@ -22,7 +22,7 @@ if (NOT raylib_FOUND)
     include(FetchContent)
     FetchContent_Declare(
         raylib
-        URL https://github.com/raysan5/raylib 
+        GIT_REPOSITORY https://github.com/raysan5/raylib.git
         GIT_TAG 5.5
     )
     FetchContent_MakeAvailable(raylib)
