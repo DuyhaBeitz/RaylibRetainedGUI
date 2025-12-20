@@ -2,6 +2,8 @@
 #include "UIElement.hpp"
 #include "UIScreen.hpp"
 
+#include "UITarget.hpp"
+
 #include "UISplit.hpp"
 #include "UIBar.hpp"
 

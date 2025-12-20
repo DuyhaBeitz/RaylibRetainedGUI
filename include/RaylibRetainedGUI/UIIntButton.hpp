@@ -7,7 +7,7 @@ class UIIntButton : public UIStringButton {
     int* m_int_ptr;
 public:
     UIIntButton(int* int_ptr, Rectangle rect = UI_FULL_RECT)
-     : UIStringButton(nullptr, rect, CHAR_DIGIT_MIN, CHAR_DIGIT_MAX), m_int_ptr(int_ptr) {
+     : UIStringButton(nullptr, rect), m_int_ptr(int_ptr) {
         SetOnlyAllowedCodepoints(true);
         AddAllowedCharacters("0123456789-");
        

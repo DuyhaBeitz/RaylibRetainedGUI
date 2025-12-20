@@ -6,7 +6,7 @@ class UIFloatButton : public UIStringButton {
     float* m_float_ptr;
 public:
     UIFloatButton(float* float_ptr, Rectangle rect = UI_FULL_RECT)
-     : UIStringButton(nullptr, rect, CHAR_DIGIT_MIN, CHAR_DIGIT_MAX), m_float_ptr(float_ptr) {
+     : UIStringButton(nullptr, rect), m_float_ptr(float_ptr) {
         SetOnlyAllowedCodepoints(true);
         AddAllowedCharacters("0123456789-.");
         

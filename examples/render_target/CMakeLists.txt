@@ -1,0 +1,3 @@
+#find_package(RaylibRetainedGUI)
+add_executable(render_target render_target.cpp)
+target_link_libraries(render_target PRIVATE RaylibRetainedGUI)

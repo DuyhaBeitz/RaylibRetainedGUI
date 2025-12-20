@@ -1,36 +1,8 @@
 #include <RaylibRetainedGUI/RaylibRetainedGUI.hpp>
-#include "utf8.h"
 #include <iostream>
-
-std::vector<int> CodepointsFromStr(const char* chars) {
-    std::vector<int> codepoints;
-    int count = 0;
-
-    int i = 0;
-    while (chars[i]) {
-        int bytes = 0;
-        int cp = GetCodepoint(chars + i, &bytes);
-        i += bytes;
-        codepoints.push_back(cp);
-    }    
-    return codepoints;
-}
-Font LoadFontForCharacters(const char *fileName, int fontSize, const char* chars) {
-    std::vector<int> codepoints = CodepointsFromStr(chars);
-    return LoadFontEx(fileName, fontSize, codepoints.data(), codepoints.size());
-}
 
 int main() {
     InitWindow(1000, 1000, "Retained GUI minimal example");
-
-    Font font = LoadFontForCharacters("examples/minimal/NotoSans-Black.ttf", 128,
-                    " !\"#$%&'()*+,-./0123456789:;<=>?@|"
-                    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                    "abcdefghijklmnopqrstuvwxyz"
-                    "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
-                    "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
-    );
-    UIElement::SetDefaultStyle(std::make_shared<UIStyle>(font));
     
     auto screen = std::make_shared<UIScreen>();
     auto bar = std::make_shared<UIBar>(CenteredRect(0.5, 0.9));

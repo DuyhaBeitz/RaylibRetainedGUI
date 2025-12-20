@@ -72,7 +72,7 @@ public:
     virtual bool MouseOn() { return CheckCollisionPointRec(GetMousePosition(), GetRect()); }
     
     std::shared_ptr<UIStyle> GetStyle() const {
-        if (!default_style) default_style = std::make_shared<UIStyle>(GetFontDefault());
+        if (!default_style) {default_style = std::make_shared<UIStyle>(GetFontDefault());}
         return default_style;
     }
 };

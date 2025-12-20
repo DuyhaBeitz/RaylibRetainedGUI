@@ -4,20 +4,6 @@
 
 #include "utf8/utf8.h"
 
-//#define MAX_INPUT_CHARS     128
-
-#define CHAR_DIGIT_MIN 48 // 0
-#define CHAR_DIGIT_MAX 57 // 9
-
-#define CHAR_UPPERCASE_LETTER_MIN 64 // A
-#define CHAR_UPPERCASE_LETTER_MAX 90 // Z
-
-#define CHAR_LOWERCASE_LETTER_MIN 97 // a
-#define CHAR_LOWERCASE_LETTER_MAX 122 // z
-
-#define CHAR_ANY_MIN 32
-#define CHAR_ANY_MAX 127
-
 class UIStringButton : public UIFuncButton {
 protected:
     std::string* m_string_ptr = nullptr;
@@ -25,21 +11,28 @@ protected:
     std::string m_buffer{};
     int m_buffer_cursor_pos = 0;
 
-    int m_char_min = 0;
-    int m_char_max = 0;
-
     bool m_only_allowed_codepoints = false;
     std::set<int> m_allowed_codepoints;
 
 public:
-    UIStringButton(std::string* ptr, Rectangle rect = UI_FULL_RECT, int char_min = CHAR_ANY_MIN, int char_max = CHAR_ANY_MAX)
-     : UIFuncButton("", rect), m_string_ptr(ptr), m_char_min(char_min), m_char_max(char_max) {
+    /*
+    m_string_ptr can be nullptr, if the user doesn't need outside string to be controlled
+    */
+    UIStringButton(std::string* ptr, Rectangle rect = UI_FULL_RECT)
+     : UIFuncButton("", rect), m_string_ptr(ptr) {
+
         BindOnHovered([this](){
             m_entering = true;
         });
         BindOnUnhovered([this](){
             m_entering = false;
         });
+
+        if (m_string_ptr) {
+            m_buffer = *m_string_ptr;
+            MoveCursorToEnd();
+        }
+
         UpdateString();
     }
 
@@ -109,37 +102,15 @@ public:
             m_buffer.insert(m_buffer_cursor_pos, temp);
         }
 
+        if (IsKeyPressed(KEY_HOME)) {
+            MoveCursorToStart();
+        }
+        if (IsKeyPressed(KEY_END)) {
+            MoveCursorToEnd();
+        }
+
         m_text = m_buffer;
         if (m_string_ptr) *m_string_ptr = m_text;
-
-
-
-        // int key = GetCharPressed();
-        // // Check if more characters have been pressed on the same frame
-        // while (key > 0)
-        // {
-        //     // NOTE: Only allow keys in range [32..125]
-        //     if ( ((key >= m_char_min) && (key <= m_char_max)) || m_additional_allowed_characters.find(key) != m_additional_allowed_characters.end())
-        //     {
-        //         m_buffer.insert(m_buffer.begin()+m_buffer_cursor_pos,(char)key);
-        //         CursorMove(1);
-        //     }
-
-        //     key = GetCharPressed();  // Check next character in the queue
-        // }
-
-        // if (IsKeyPressed(KEY_BACKSPACE) && m_buffer.size() > 0 && m_buffer_cursor_pos - 1 >= 0)
-        // {
-        //     m_buffer.erase(m_buffer.begin()+m_buffer_cursor_pos - 1);
-        //     CursorMove(-1);
-        // }
-        // if (IsKeyPressed(KEY_DELETE) && m_buffer.size() > 0 && m_buffer_cursor_pos < m_buffer.size())
-        // {
-        //     m_buffer.erase(m_buffer.begin()+m_buffer_cursor_pos);
-        // }
-
-        // m_text = m_buffer;
-        // if (m_string_ptr) *m_string_ptr = m_text;
     }
 
     void EraseAtCursor() {
@@ -153,9 +124,29 @@ public:
         }
     }
 
+    bool CursorCanMoveLeft() {
+        return m_buffer_cursor_pos > 0;
+    }
+
+    bool CursorCanMoveRight() {
+        return m_buffer_cursor_pos < (int)m_buffer.size();
+    }
+
     void ClampStringCursorPos() {
         m_buffer_cursor_pos = std::max(m_buffer_cursor_pos, 0);
         m_buffer_cursor_pos = std::min(m_buffer_cursor_pos, int(m_buffer.size()));
+    }
+
+    void MoveCursorToStart() {
+        while (CursorCanMoveLeft()) {
+            CursorMove(-1);
+        }
+    }
+
+    void MoveCursorToEnd() {
+        while (CursorCanMoveRight()) {
+            CursorMove(1);
+        }
     }
 
     void CursorMove(int delta) {
@@ -164,10 +155,15 @@ public:
         // Move right
         if (delta > 0) {
             int remaining = delta;
-            while (remaining-- > 0 && m_buffer_cursor_pos < (int)m_buffer.size()) {
+            while (remaining-- > 0) {
+                // can reach size = the end of the string, past all characters
+                if (m_buffer_cursor_pos >= (int)m_buffer.size()) break;
+
                 int size = 0;
                 GetCodepointNext(m_buffer.c_str() + m_buffer_cursor_pos, &size);
-                if (size <= 0) size = 1;  // safety fallback
+
+                if (size <= 0) size = 1; // cursor always advances
+
                 m_buffer_cursor_pos += size;
             }
         }
@@ -178,7 +174,7 @@ public:
             while (remaining-- > 0 && m_buffer_cursor_pos > 0) {
                 int size = 0;
                 GetCodepointPrevious(m_buffer.c_str() + m_buffer_cursor_pos, &size);
-                if (size <= 0) size = 1;  // safety fallback
+                if (size <= 0) size = 1; // cursor always advances
                 m_buffer_cursor_pos -= size;
             }
         }
