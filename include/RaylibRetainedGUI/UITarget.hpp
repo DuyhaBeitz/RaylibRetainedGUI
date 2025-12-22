@@ -64,11 +64,8 @@ public:
     }
 
 
-    virtual void Draw() override {
-        GetStyle()->DrawBase(*this);
+    virtual void CustomDraw() override {
         DrawRenderTexture();
-        GetStyle()->DrawBorders(*this);
-        DrawChildren();
     }
 
     void SetMode(UITargetDrawMode mode) {

@@ -13,9 +13,7 @@ public:
         AddChild(elem2);
     }
 
-    virtual void Update(std::shared_ptr<UIElement> parent_element) override {
-        UpdateAbsTransform(parent_element);
-
+    virtual void CustomUpdate(std::shared_ptr<UIElement> parent_element) override {
         if (m_horizontal) {
             m_children[0]->SetRelPos(Vector2{0, 0});
             m_children[0]->SetRelSize(Vector2{m_alpha, 1});
@@ -30,12 +28,11 @@ public:
             m_children[1]->SetRelPos(Vector2{0, m_alpha});
             m_children[1]->SetRelSize(Vector2{1, 1-m_alpha});
         }
-
-        UpdateChildren();
     };
 
     virtual void Draw() {
         GetStyle()->DrawBase(*this);
+        CustomDraw();
         DrawChildren();
     }
 };

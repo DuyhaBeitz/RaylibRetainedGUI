@@ -23,6 +23,8 @@ protected:
     
     static inline std::shared_ptr<UIStyle> default_style = nullptr;
 
+    Rectangle m_crop_rect = {};
+
 public:
 
     static void SetDefaultStyle(std::shared_ptr<UIStyle> style) { default_style = style; }
@@ -34,18 +36,37 @@ public:
     void FitToScreen();
     void UpdateAbsTransform(std::shared_ptr<UIElement> parent_element);
     void UpdateChildren();
-    
+    void UpdateCropRect(Rectangle parent_crop_rect) {
+        m_crop_rect = GetCollisionRec(parent_crop_rect, GetRect());
+    }
+
+    virtual void CustomUpdate(std::shared_ptr<UIElement> parent_element) {}
+
     virtual void Update(std::shared_ptr<UIElement> parent_element) {
         UpdateAbsTransform(parent_element);
+        UpdateCropRect(parent_element->GetCropRect());
+        CustomUpdate(parent_element);
         UpdateChildren();
     }
 
     void DrawChildren();
 
+    virtual void CustomDraw() {};
+    
     virtual void Draw() {
-        GetStyle()->DrawBase(*this);
-        GetStyle()->DrawBorders(*this);
-        DrawChildren();
+        BeginScissorMode(
+            m_crop_rect.x,
+            m_crop_rect.y,
+            m_crop_rect.width,
+            m_crop_rect.height
+        );
+            GetStyle()->DrawBase(*this);
+            CustomDraw();
+            GetStyle()->DrawBorders(*this);
+            DrawChildren();
+
+        EndScissorMode();
+        //DrawRectangleLinesEx(m_crop_rect, 3, RED);
     }
 
     // pos
@@ -58,6 +79,9 @@ public:
     Vector2 GetAbsSize() { return m_abs_size; }
     void SetRelSize(Vector2 rel_size) { m_rel_size = rel_size; }
 
+    void SetCropRect(Rectangle crop_rect) { m_crop_rect = crop_rect; }
+    Rectangle GetCropRect() { return m_crop_rect; }
+
     Rectangle GetRect() { return Rectangle{m_abs_pos.x, m_abs_pos.y, m_abs_size.x, m_abs_size.y}; }
     Rectangle GetInnerRect(float padding) { return Rectangle{m_abs_pos.x+padding, m_abs_pos.y+padding, m_abs_size.x-padding*2, m_abs_size.y-padding*2}; }
 
@@ -69,7 +93,7 @@ public:
 
     virtual void AddChild(std::shared_ptr<UIElement> child) { m_children.push_back(child); }
 
-    virtual bool MouseOn() { return CheckCollisionPointRec(GetMousePosition(), GetRect()); }
+    virtual bool MouseOn() { return CheckCollisionPointRec(GetMousePosition(), m_crop_rect); }
     
     std::shared_ptr<UIStyle> GetStyle() const {
         if (!default_style) {default_style = std::make_shared<UIStyle>(GetFontDefault());}

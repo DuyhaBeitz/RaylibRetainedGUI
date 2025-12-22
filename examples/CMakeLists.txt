@@ -1,3 +1,4 @@
 add_subdirectory(minimal)
 add_subdirectory(font)
 add_subdirectory(render_target)
+add_subdirectory(scrollable)

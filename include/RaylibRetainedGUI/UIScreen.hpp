@@ -7,6 +7,7 @@ public:
 
     virtual void Update(std::shared_ptr<UIElement> parent_element) override {
         FitToScreen();
+        m_crop_rect = GetRect();
         UpdateChildren();
     };
 

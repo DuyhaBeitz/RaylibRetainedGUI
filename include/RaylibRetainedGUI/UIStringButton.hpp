@@ -182,18 +182,13 @@ public:
         ClampStringCursorPos();
     }
 
-    virtual void Draw() {
-        GetStyle()->DrawBase(*this);
+    virtual void CustomDraw() override {
         std::string text_to_draw = m_text;
         if (m_entering) text_to_draw.insert(text_to_draw.begin()+m_buffer_cursor_pos, '|');
         DrawText(text_to_draw);
-        GetStyle()->DrawBorders(*this);
-        DrawChildren();        
     }
 
-    virtual void Update(std::shared_ptr<UIElement> parent_element) override {
-        UpdateAbsTransform(parent_element);
-        UpdateChildren();
+    virtual void CustomUpdate(std::shared_ptr<UIElement> parent_element) override {
         UpdateButtonState();
         if (m_entering) UpdateString();
     };

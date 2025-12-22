@@ -12,10 +12,7 @@ public:
         });
     }
 
-    virtual void Draw() {
-        GetStyle()->DrawBase(*this);
+    virtual void CustomDraw() override {
         if (*m_ptr) DrawRectanglePro(GetInnerRect(GetStyle()->m_line_thickness*4), Vector2{0, 0}, 0.f, GetStyle()->m_line_color);
-        GetStyle()->DrawBorders(*this);
-        DrawChildren();
     }
 };

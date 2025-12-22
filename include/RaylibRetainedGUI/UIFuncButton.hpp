@@ -14,7 +14,7 @@ public:
     {}
     
     void UpdateButtonState() {
-        bool in_rec = CheckCollisionPointRec(GetMousePosition(), GetRect());
+        bool in_rec = MouseOn();
         bool pressed = IsMouseButtonDown(MOUSE_BUTTON_LEFT);
 
         prev_state = state;
@@ -58,9 +58,7 @@ public:
         }
     }
 
-    virtual void Update(std::shared_ptr<UIElement> parent_element) {
-        UpdateAbsTransform(parent_element);
-        UpdateChildren();
+    virtual void CustomUpdate(std::shared_ptr<UIElement> parent_element) {
         UpdateButtonState();
     };
 

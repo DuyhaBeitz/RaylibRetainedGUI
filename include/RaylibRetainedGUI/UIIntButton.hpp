@@ -28,9 +28,7 @@ public:
         }
     }
 
-    virtual void Update(std::shared_ptr<UIElement> parent_element) override {
-        UpdateAbsTransform(parent_element);
-        UpdateChildren();
+    virtual void CustomUpdate(std::shared_ptr<UIElement> parent_element) override {
         UpdateButtonState();
         if (m_entering) {
             UpdateString();

@@ -1,0 +1,3 @@
+#find_package(RaylibRetainedGUI)
+add_executable(scrollable scrollable.cpp)
+target_link_libraries(scrollable PRIVATE RaylibRetainedGUI)

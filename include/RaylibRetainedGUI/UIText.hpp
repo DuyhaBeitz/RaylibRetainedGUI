@@ -29,11 +29,8 @@ public:
         DrawTextEx(GetStyle()->m_font, text.c_str(), textPosition, adjustedFontSize, GetStyle()->m_text_spacing, m_text_tint);
     }
 
-    virtual void Draw() override {
-        GetStyle()->DrawBase(*this);
+    virtual void CustomDraw() override {
         DrawText(m_text);
-        GetStyle()->DrawBorders(*this);
-        DrawChildren();
     }
 
     void SetTextTint(Color text_tint) { m_text_tint = text_tint;}

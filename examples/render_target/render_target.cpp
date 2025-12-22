@@ -28,7 +28,6 @@ int main() {
     camera.target = Vector3{0.0f, 0.0f, 0.0f};
     camera.projection = CAMERA_PERSPECTIVE;
 
-
     while (!WindowShouldClose()) {
 
         camera.position = Vector3{sinf(GetTime()), 1.0f, cosf(GetTime())} * 5.0f;
