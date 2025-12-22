@@ -10,7 +10,7 @@ int main() {
     // the position will be handled by the bar
     int elems_count = 10;
     Rectangle rect = SizeRect(1, 1.f/elems_count);
-    for (int i = 0; i < elems_count * 2; i++) {
+    for (int i = 0; i < elems_count * 4; i++) {
         auto child = std::make_shared<UIText>("Scroll!", rect);
         scrollable->AddChild(child);    
     }    

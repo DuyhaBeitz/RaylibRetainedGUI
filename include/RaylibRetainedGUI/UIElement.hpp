@@ -8,6 +8,11 @@
 #include <memory>
 #include "UIStyle.hpp"
 
+enum Orientation {
+    Horizontal = 0,
+    Vertical
+};
+
 class UIElement : public std::enable_shared_from_this<UIElement> {
 protected:
     // pos
@@ -61,8 +66,8 @@ public:
             m_crop_rect.height
         );
             GetStyle()->DrawBase(*this);
-            CustomDraw();
             GetStyle()->DrawBorders(*this);
+            CustomDraw();
             DrawChildren();
 
         EndScissorMode();
@@ -72,11 +77,17 @@ public:
     // pos
     Vector2 GetRelPos() { return m_rel_pos; }
     Vector2 GetAbsPos() { return m_abs_pos; }
+
+    void SetRelPosX(float rel_x) { m_rel_pos.x = rel_x; }
+    void SetRelPosY(float rel_y) { m_rel_pos.y = rel_y; }
     void SetRelPos(Vector2 rel_pos) { m_rel_pos = rel_pos; }
 
     // size
     Vector2 GetRelSize() { return m_rel_size; }
     Vector2 GetAbsSize() { return m_abs_size; }
+
+    void SetRelWidth(float rel_width) { m_rel_size.x = rel_width; }
+    void SetRelHeight(float rel_height) { m_rel_size.y = rel_height; }
     void SetRelSize(Vector2 rel_size) { m_rel_size = rel_size; }
 
     void SetCropRect(Rectangle crop_rect) { m_crop_rect = crop_rect; }
