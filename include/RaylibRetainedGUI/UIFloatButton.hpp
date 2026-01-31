@@ -10,6 +10,11 @@ public:
         SetOnlyAllowedCodepoints(true);
         AddAllowedCharacters("0123456789-.");
         
+        if (float_ptr) {
+            m_buffer = std::to_string(*float_ptr);
+            m_text = m_buffer;
+        }
+        
         UpdateString();
         UpdateFloat();
     }

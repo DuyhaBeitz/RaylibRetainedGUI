@@ -11,6 +11,11 @@ public:
         SetOnlyAllowedCodepoints(true);
         AddAllowedCharacters("0123456789-");
        
+        if (int_ptr) {
+            m_buffer = std::to_string(*int_ptr);
+            m_text = m_buffer;
+        }
+
         UpdateString();
         UpdateInt();
     }
