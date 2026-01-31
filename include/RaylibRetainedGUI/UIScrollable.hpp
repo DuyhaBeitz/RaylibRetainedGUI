@@ -2,7 +2,6 @@
 #include "UIBar.hpp"
 #include "UISlider.hpp"
 #include "UISplit.hpp"
-#include <iostream>
 
 /*
 Is designed to be moved around, revealing children
@@ -63,7 +62,6 @@ public:
             0.0f,
             -rel_leftover * m_scroll_alpha
         });
-        std::cout << m_scroll_alpha << std::endl;
 
         m_split->SetAlpha(
             1.0f - GetStyle()->m_line_thickness * 30.0f / GetAbsSize().x
