@@ -14,7 +14,8 @@ private:
 
 public:
     UIEnum(int* int_ptr = nullptr, Rectangle rect = UI_FULL_RECT) : UIElement(rect), m_int_ptr(int_ptr){
-        // < > current
+        if (m_int_ptr) m_current_index = *m_int_ptr;
+
         m_current_text = std::make_shared<UIText>("?");
 
         auto button_left = std::make_shared<UIFuncButton>("<");
