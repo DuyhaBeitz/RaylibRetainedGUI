@@ -28,7 +28,7 @@ public:
         );
 
         auto buttons_split = std::make_shared<UISplit>(button_left, button_right);
-        m_split = std::make_shared<UISplit>(buttons_split, m_current_text, 0.5f, Rectangle{0.0f, 0.0f, 1.0f, 0.9f});
+        m_split = std::make_shared<UISplit>(buttons_split, m_current_text, 0.3f, Rectangle{0.0f, 0.0f, 1.0f, 0.9f});
 
         AddChild(m_split);
     }
