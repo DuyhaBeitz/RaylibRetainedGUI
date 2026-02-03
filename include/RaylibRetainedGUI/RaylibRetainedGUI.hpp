@@ -16,3 +16,4 @@
 #include "UIFloatButton.hpp"
 
 #include "UISlider.hpp"
+#include "UIEnum.hpp"

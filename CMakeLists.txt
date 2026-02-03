@@ -17,16 +17,16 @@ target_include_directories(${PROJECT_NAME}
         $<INSTALL_INTERFACE:include>
 )
 
-# find_package(raylib QUIET)
-# if (NOT raylib_FOUND)
-#     include(FetchContent)
-#     FetchContent_Declare(
-#         raylib
-#         GIT_REPOSITORY https://github.com/raysan5/raylib.git
-#         GIT_TAG 5.5
-#     )
-#     FetchContent_MakeAvailable(raylib)
-# endif()
+find_package(raylib QUIET)
+if (NOT raylib_FOUND)
+    include(FetchContent)
+    FetchContent_Declare(
+        raylib
+        GIT_REPOSITORY https://github.com/raysan5/raylib.git
+        GIT_TAG master
+    )
+    FetchContent_MakeAvailable(raylib)
+endif()
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
     raylib
