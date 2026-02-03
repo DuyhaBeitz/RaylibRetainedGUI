@@ -4,7 +4,7 @@
 int main() {
     InitWindow(1000, 1000, "Retained GUI minimal example");
     
-    auto screen = std::make_shared<UIScreen>(BLACK);
+    auto screen = std::make_shared<UIScreen>();
     int current = 0;
     auto enu = std::make_shared<UIEnum>(&current, CenteredRect(0.8, 0.3));
     
@@ -16,6 +16,7 @@ int main() {
     screen->AddChild(enu);
 
     while (!WindowShouldClose()) {
+        ClearBackground(BLACK);
         screen->Update(nullptr);
         BeginDrawing();
         screen->Draw();
