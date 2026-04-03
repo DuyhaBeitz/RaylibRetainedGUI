@@ -82,6 +82,11 @@ public:
     void SetRelPosY(float rel_y) { m_rel_pos.y = rel_y; }
     void SetRelPos(Vector2 rel_pos) { m_rel_pos = rel_pos; }
 
+    void SetRelRect(Rectangle rect) {
+        m_rel_pos = Vector2{rect.x, rect.y};
+        m_rel_size = Vector2{rect.width, rect.height};
+    }
+
     // size
     Vector2 GetRelSize() { return m_rel_size; }
     Vector2 GetAbsSize() { return m_abs_size; }
