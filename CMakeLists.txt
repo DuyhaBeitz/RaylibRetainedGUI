@@ -18,7 +18,7 @@ target_include_directories(${PROJECT_NAME}
 )
 
 find_package(raylib QUIET)
-if (NOT raylib_FOUND)
+if (NOT TARGET raylib)
     include(FetchContent)
     FetchContent_Declare(
         raylib
