@@ -17,10 +17,11 @@ target_include_directories(${PROJECT_NAME}
         $<INSTALL_INTERFACE:include>
 )
 
-find_package(raylib REQUIRED)
 
-# find_package(raylib QUIET)
-# if (NOT TARGET raylib)
+
+if (NOT TARGET raylib)
+    find_package(raylib REQUIRED)
+endif()
 #     include(FetchContent)
 #     FetchContent_Declare(
 #         raylib
